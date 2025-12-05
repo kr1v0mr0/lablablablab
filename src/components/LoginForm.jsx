@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { loginUser, registerUser, clearErrors } from '../redux/authSlice';
 
 const LoginForm = () => {
-    // Изменили название стейта на name
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
@@ -57,22 +56,20 @@ const LoginForm = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Введите пароль"
-                        style={{ width: '100%', padding: '12px', border: '2px solid #bdc3c7', borderRadius: '6px', marginTop: '6px' }}
                     />
                 </div>
 
                 {error && (
-                    <div className="error-message" style={{ textAlign: 'center', marginBottom: '15px' }}>
+                    <div className="error-message">
                         {typeof error === 'object' ? JSON.stringify(error) : error}
                     </div>
                 )}
 
-                <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
+                <div style={{ display: 'flex', gap: '15px', marginTop: '20px' }}>
                     <button 
                         onClick={handleLogin}
                         className="submit-button"
                         disabled={status === 'loading'}
-                        style={{ marginTop: 0 }}
                     >
                         {status === 'loading' ? '...' : 'Войти'}
                     </button>
@@ -81,7 +78,6 @@ const LoginForm = () => {
                         onClick={handleRegister}
                         className="submit-button"
                         disabled={status === 'loading'}
-                        style={{ marginTop: 0, background: 'linear-gradient(0deg, #764ba2, #667eea)' }}
                     >
                         Регистрация
                     </button>

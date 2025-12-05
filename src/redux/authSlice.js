@@ -1,27 +1,23 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../utils/api';
 
-// Вход
 export const loginUser = createAsyncThunk(
     'auth/login',
     async ({ name, password }, { rejectWithValue }) => {
         try {
-            // Шлем name и password
             const response = await api.post('/auth/login', { name, password });
-            return response.data; // Ожидаем: { accessToken, refreshToken, name, ... }
+            return response.data; 
         } catch (error) {
             return rejectWithValue(error.response?.data?.message || 'Ошибка входа');
         }
     }
 );
 
-// Регистрация
 export const registerUser = createAsyncThunk(
     'auth/register',
     async ({ name, password }, { rejectWithValue, dispatch }) => {
         try {
             await api.post('/auth/register', { name, password });
-            // После успешной регистрации сразу пробуем войти
             return dispatch(loginUser({ name, password })).unwrap();
         } catch (error) {
             return rejectWithValue(error.response?.data?.message || 'Ошибка регистрации');
@@ -33,7 +29,7 @@ const authSlice = createSlice({
     name: 'auth',
     initialState: {
         accessToken: localStorage.getItem('accessToken') || null,
-        refreshToken: localStorage.getItem('refreshToken') || null, // Храним рефреш
+        refreshToken: localStorage.getItem('refreshToken') || null, 
         name: localStorage.getItem('name') || null,
         status: 'idle',
         error: null,
@@ -45,7 +41,7 @@ const authSlice = createSlice({
             state.name = null;
             state.status = 'idle';
             state.error = null;
-            localStorage.clear(); // Чистим всё
+            localStorage.clear(); 
         },
         clearErrors: (state) => {
             state.error = null;
@@ -54,7 +50,6 @@ const authSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            // Login
             .addCase(loginUser.pending, (state) => {
                 state.status = 'loading';
                 state.error = null;
@@ -73,7 +68,6 @@ const authSlice = createSlice({
                 state.status = 'failed';
                 state.error = action.payload;
             })
-            // Register (ошибки)
             .addCase(registerUser.pending, (state) => {
                 state.status = 'loading';
                 state.error = null;

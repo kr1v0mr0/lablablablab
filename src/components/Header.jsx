@@ -18,8 +18,8 @@ const Header = () => {
         <header>
             <div className="header-container">
                 <div className="header-text">
-                    <h1>Проверка точки в область</h1>
-                    <h2>Студент: Крылова Мария Дмитриевна | Группа: P3209 | Вариант: 77123</h2>
+                    <h1>Проверка попадания точки в область</h1>
+                    <h2>Студент: Крылова Мария Дмитриевна | Группа: P3209 | Вариант: 547</h2>
                     <div className="header-navigation">
                         {location.pathname === '/main' && (
                             <button onClick={handleLogout} className="nav-link">
